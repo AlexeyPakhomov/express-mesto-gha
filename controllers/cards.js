@@ -30,7 +30,7 @@ const deleteCardById = (req, res, next) => {
         .then(() => res.status(200).send(card))
         .catch(next);
     })
-    .catch(() => res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' }))
+    .catch(() => res.status(ERROR_VALIDATION).send({ message: 'Удаление карточки с некорректным id' }))
     .catch(next);
 };
 
@@ -46,12 +46,10 @@ const putCardLike = (req, res) => {
       }
       return res.status(200).send(card);
     })
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        return res.status(ERROR_VALIDATION).send({ message: 'Переданы некорректные данные для постановки/снятии лайка.' });
-      }
-      return res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' });
-    });
+    .catch(
+      () => res.status(ERROR_VALIDATION).send({ message: 'Переданы некорректные данные для постановки/снятии лайка.' }),
+      // return res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' });
+    );
 };
 
 const deleteCardLike = (req, res) => {
@@ -66,12 +64,7 @@ const deleteCardLike = (req, res) => {
       }
       return res.status(200).send(card);
     })
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        return res.status(ERROR_VALIDATION).send({ message: 'Переданы некорректные данные для постановки/снятии лайка.' });
-      }
-      return res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' });
-    });
+    .catch(() => res.status(ERROR_VALIDATION).send({ message: 'Переданы некорректные данные для постановки/снятии лайка.' }));
 };
 
 module.exports = {
