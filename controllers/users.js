@@ -12,12 +12,7 @@ const createUser = (req, res) => {
 
   User.create({ name, about, avatar })
     .then((user) => res.status(200).send(user))
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        return res.status(ERROR_VALIDATION).send({ message: 'Переданы некорректные данные при создании пользователя.' });
-      }
-      return res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' });
-    });
+    .catch(() => res.status(ERROR_VALIDATION).send({ message: 'Переданы некорректные данные при создании пользователя.' }));
 };
 
 const getUserById = (req, res) => {
@@ -29,7 +24,7 @@ const getUserById = (req, res) => {
       return res.status(200).send(user);
     })
     .catch(
-      () => res.status(ERROR_VALIDATION).send({ message: 'Переданы некорректные данные при создании пользователя.' }),
+      () => res.status(ERROR_VALIDATION).send({ message: 'Переданы некорректные данные при поиске пользователя.' }),
       // return res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' });
     );
 };
