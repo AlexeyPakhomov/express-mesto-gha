@@ -1,0 +1,5 @@
+const ERROR_VALIDATION = 400;
+const ERROR_CAST = 404;
+const ERROR_SERVER = 500;
+
+module.exports = { ERROR_VALIDATION, ERROR_CAST, ERROR_SERVER };
