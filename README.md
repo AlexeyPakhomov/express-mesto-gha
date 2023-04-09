@@ -37,7 +37,7 @@
 7.  Подключить nodemon для hot reload c флагом -D командой `npm i nodemon -D`
 8.  Подключить Mongoose командой `npm i mongoose`
 9.  Запустить сервер Mongo командой `brew services start mongodb-community@4.4`
-    ~~ 10. Подключить стилизацию строк в консоли командой `npm i chalk@4.1.2` ~~
+~~ 10. Подключить стилизацию строк в консоли командой `npm i chalk@4.1.2` ~~
 10. Подключить helmet для защиты приложения от некоторых широко известных веб-уязвимостей командой `npm install --save helmet`
 11. Подключить Express rate limit для защиты от DoS атак `npm install express-rate-limit`
 12. Создать схемы и модели User и Cards
