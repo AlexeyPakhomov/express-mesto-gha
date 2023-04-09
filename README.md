@@ -23,20 +23,24 @@
 
     **Процесс установки:**
 
-    - Установить линтер командой \*npm i eslint\*
+    - Установить линтер командой _npm i eslint_
 
-      **Установить ещё две dev-зависимости, чтобы линтер работал по правилам стайлгайда Airbnb:** \* _npm i eslint-config-airbnb-base_ \* _npm i eslint-plugin-import_
+      **Установить ещё две dev-зависимости, чтобы линтер работал по правилам стайлгайда Airbnb:**
+      _ npm i eslint-config-airbnb-base _
+      _ npm i eslint-plugin-import _
 
-      - _Настроить файл .eslintrc и добавить команды lint в файл package.json_
+      - Настроить файл .eslintrc и добавить команды lint в файл package.json
 
-4.  Создать файл .gitignore
+4.  Создать файл `.gitignore`
 5.  Создать точку входа(файл `app.js`)
 6.  Подключить Express командой `npm i express`
 7.  Подключить nodemon для hot reload c флагом -D командой `npm i nodemon -D`
 8.  Подключить Mongoose командой `npm i mongoose`
 9.  Запустить сервер Mongo командой `brew services start mongodb-community@4.4`
-10. Подключить стилизацию строк в консоли командой `npm i chalk@4.1.2`
-11. Создать схемы и модели User и Cards
-12. Создать контроллеры и роуты для Users и Сards
+    ~~ 10. Подключить стилизацию строк в консоли командой `npm i chalk@4.1.2` ~~
+10. Подключить helmet для защиты приложения от некоторых широко известных веб-уязвимостей командой `npm install --save helmet`
+11. Подключить Express rate limit для защиты от DoS атак `npm install express-rate-limit`
+12. Создать схемы и модели User и Cards
+13. Создать контроллеры и роуты для Users и Сards
 
-https://github.com/AlexeyPakhomov/express-mesto-gha
+[Ссылка на express-mesto-gha](https://github.com/AlexeyPakhomov/express-mesto-gha)

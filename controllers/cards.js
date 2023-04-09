@@ -3,7 +3,7 @@ const { ERROR_VALIDATION, ERROR_CAST, ERROR_SERVER } = require('../utils/constan
 
 const getCards = (req, res) => {
   Card.find()
-    .then((cards) => res.status(200).send(cards))
+    .then((cards) => res.send({ cards }))
     .catch(() => res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' }));
 };
 
@@ -11,27 +11,31 @@ const createCard = (req, res) => {
   const { name, link } = req.body;
   const owner = req.user._id;
   Card.create({ name, link, owner })
-    .then((card) => res.status(200).send(card))
+    .then((card) => res.send({ card }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return res.status(ERROR_VALIDATION).send({ message: 'Переданы некорректные данные при создании карточки.' });
+        return res
+          .status(ERROR_VALIDATION)
+          .send({ message: 'Переданы некорректные данные при создании карточки.' });
       }
       return res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' });
     });
 };
 
-const deleteCardById = (req, res, next) => {
+const deleteCardById = (req, res) => {
   Card.findById(req.params.cardId)
     .then((card) => {
       if (!card) {
         return res.status(ERROR_CAST).send({ message: 'Карточка с указанным _id не найдена.' });
       }
-      return Card.findByIdAndRemove(req.params.cardId)
-        .then(() => res.status(200).send(card))
-        .catch(next);
+      return Card.findByIdAndRemove(req.params.cardId).then(() => res.send({ card }));
     })
-    .catch(() => res.status(ERROR_VALIDATION).send({ message: 'Удаление карточки с некорректным id' }))
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        return res.status(ERROR_VALIDATION).send({ message: 'Удаление карточки с некорректным id' });
+      }
+      return res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' });
+    });
 };
 
 const putCardLike = (req, res) => {
@@ -44,12 +48,16 @@ const putCardLike = (req, res) => {
       if (!card) {
         return res.status(ERROR_CAST).send({ message: 'Передан несуществующий _id карточки.' });
       }
-      return res.status(200).send(card);
+      return res.send({ card });
     })
-    .catch(
-      () => res.status(ERROR_VALIDATION).send({ message: 'Переданы некорректные данные для постановки/снятии лайка.' }),
-      // return res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' });
-    );
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        return res
+          .status(ERROR_VALIDATION)
+          .send({ message: 'Переданы некорректные данные для постановки/снятии лайка.' });
+      }
+      return res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' });
+    });
 };
 
 const deleteCardLike = (req, res) => {
@@ -62,9 +70,16 @@ const deleteCardLike = (req, res) => {
       if (!card) {
         return res.status(ERROR_CAST).send({ message: 'Передан несуществующий _id карточки.' });
       }
-      return res.status(200).send(card);
+      return res.send({ card });
     })
-    .catch(() => res.status(ERROR_VALIDATION).send({ message: 'Переданы некорректные данные для постановки/снятии лайка.' }));
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        return res
+          .status(ERROR_VALIDATION)
+          .send({ message: 'Переданы некорректные данные для постановки/снятии лайка.' });
+      }
+      return res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' });
+    });
 };
 
 module.exports = {
