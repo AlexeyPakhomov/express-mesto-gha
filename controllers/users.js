@@ -3,7 +3,7 @@ const { ERROR_VALIDATION, ERROR_CAST, ERROR_SERVER } = require('../utils/constan
 
 const getUsers = (req, res) => {
   User.find()
-    .then((users) => res.send({ users }))
+    .then((users) => res.send(users))
     .catch(() => res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' }));
 };
 
@@ -11,7 +11,7 @@ const createUser = (req, res) => {
   const { name, about, avatar } = req.body;
 
   User.create({ name, about, avatar })
-    .then((user) => res.send({ user }))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         return res
@@ -30,7 +30,7 @@ const getUserById = (req, res) => {
           .status(ERROR_CAST)
           .send({ message: 'Пользователь по указанному _id не найден.' });
       }
-      return res.send({ user });
+      return res.send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -49,7 +49,7 @@ const updateProfile = (req, res) => {
       if (!user) {
         return res.status(ERROR_CAST).send({ message: 'Пользователь с указанным _id не найден.' });
       }
-      return res.send({ user });
+      return res.send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -72,7 +72,7 @@ const updateAvatar = (req, res) => {
       if (!user) {
         return res.status(ERROR_CAST).send({ message: 'Пользователь с указанным _id не найден.' });
       }
-      return res.send({ user });
+      return res.send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {

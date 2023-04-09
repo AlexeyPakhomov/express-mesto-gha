@@ -3,7 +3,7 @@ const { ERROR_VALIDATION, ERROR_CAST, ERROR_SERVER } = require('../utils/constan
 
 const getCards = (req, res) => {
   Card.find()
-    .then((cards) => res.send({ cards }))
+    .then((cards) => res.send(cards))
     .catch(() => res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' }));
 };
 
@@ -11,7 +11,7 @@ const createCard = (req, res) => {
   const { name, link } = req.body;
   const owner = req.user._id;
   Card.create({ name, link, owner })
-    .then((card) => res.send({ card }))
+    .then((card) => res.send(card))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         return res
@@ -28,7 +28,7 @@ const deleteCardById = (req, res) => {
       if (!card) {
         return res.status(ERROR_CAST).send({ message: 'Карточка с указанным _id не найдена.' });
       }
-      return Card.findByIdAndRemove(req.params.cardId).then(() => res.send({ card }));
+      return Card.findByIdAndRemove(req.params.cardId).then(() => res.send(card));
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -48,7 +48,7 @@ const putCardLike = (req, res) => {
       if (!card) {
         return res.status(ERROR_CAST).send({ message: 'Передан несуществующий _id карточки.' });
       }
-      return res.send({ card });
+      return res.send(card);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -70,7 +70,7 @@ const deleteCardLike = (req, res) => {
       if (!card) {
         return res.status(ERROR_CAST).send({ message: 'Передан несуществующий _id карточки.' });
       }
-      return res.send({ card });
+      return res.send(card);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
