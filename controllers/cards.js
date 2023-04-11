@@ -32,7 +32,9 @@ const deleteCardById = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        return res.status(ERROR_VALIDATION).send({ message: 'Удаление карточки с некорректным id' });
+        return res
+          .status(ERROR_VALIDATION)
+          .send({ message: 'Удаление карточки с некорректным id' });
       }
       return res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' });
     });

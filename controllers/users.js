@@ -14,9 +14,9 @@ const createUser = (req, res) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return res
-          .status(ERROR_VALIDATION)
-          .send({ message: 'Переданы некорректные данные при создании пользователя.' });
+        return res.status(ERROR_VALIDATION).send({
+          message: 'Переданы некорректные данные при создании пользователя.',
+        });
       }
       return res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' });
     });
@@ -34,9 +34,9 @@ const getUserById = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        return res
-          .status(ERROR_VALIDATION)
-          .send({ message: 'Переданы некорректные данные при поиске пользователя.' });
+        return res.status(ERROR_VALIDATION).send({
+          message: 'Переданы некорректные данные при поиске пользователя.',
+        });
       }
       return res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' });
     });
@@ -53,9 +53,9 @@ const updateProfile = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return res
-          .status(ERROR_VALIDATION)
-          .send({ message: 'Переданы некорректные данные при обновлении профиля.' });
+        return res.status(ERROR_VALIDATION).send({
+          message: 'Переданы некорректные данные при обновлении профиля.',
+        });
       }
       return res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' });
     });
@@ -66,7 +66,7 @@ const updateAvatar = (req, res) => {
   return User.findByIdAndUpdate(
     req.user._id,
     { avatar },
-    { new: true, runValidators: true, upsert: true },
+    { new: true, runValidators: true }, // NEW - обработчик then получит на вход обновлённую запись;
   )
     .then((user) => {
       if (!user) {
@@ -76,14 +76,18 @@ const updateAvatar = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return res
-          .status(ERROR_VALIDATION)
-          .send({ message: 'Переданы некорректные данные при обновлении аватара.' });
+        return res.status(ERROR_VALIDATION).send({
+          message: 'Переданы некорректные данные при обновлении аватара.',
+        });
       }
       return res.status(ERROR_SERVER).send({ message: 'Ошибка по умолчанию.' });
     });
 };
 
 module.exports = {
-  getUsers, getUserById, createUser, updateProfile, updateAvatar,
+  getUsers,
+  getUserById,
+  createUser,
+  updateProfile,
+  updateAvatar,
 };

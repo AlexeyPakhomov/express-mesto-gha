@@ -1,22 +1,15 @@
 const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
 const express = require('express');
 const mongoose = require('mongoose');
 const usersRoutes = require('./routes/users.routes');
 const cardsRoutes = require('./routes/cards.routes');
 const { ERROR_CAST } = require('./utils/constant');
+const { limiter } = require('./utils/config');
 
 const app = express();
 const { PORT = 3000 } = process.env;
 
 app.use(helmet());
-const limiter = rateLimit({
-  windowMs: 8 * 60 * 1000, // 8 минут
-  max: 100, // Ограничиваем каждый IP-адрес 100 запросами на `окно` ( в теч. 8 минут)
-  standardHeaders: false, // Скрываем информацию об ограничении в заголовках `RateLimit-*`
-  legacyHeaders: false, // Отключаем заголовки `X-RateLimit-*`
-  message: 'Превышено допустимое количество запросов. Попробуйте повторить запрос позднее.', // Сообщение при превышении кол-ва запросов
-});
 
 app.use(limiter); // Ограничение распространяется на все окна
 app.use(express.json());
