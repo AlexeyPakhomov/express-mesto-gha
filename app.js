@@ -18,13 +18,13 @@ app.use(helmet());
 app.use(limiter); // Ограничение распространяется на все окна
 app.use(bodyParser.json());
 
-app.use((req, res, next) => {
-  req.user = {
-    _id: '643f1fb891e3cd549c296a21',
-  };
+//app.use((req, res, next) => {
+//  req.user = {
+//    _id: '643f1fb891e3cd549c296a21',
+//  };
 
-  next();
-});
+//  next();
+//});
 
 app.post(
   '/signup',
@@ -51,7 +51,7 @@ app.post(
   }),
   login,
 );
-//app.use(auth);
+app.use(auth);
 app.use('/users', usersRoutes);
 app.use('/cards', cardsRoutes);
 app.use('*', () => {
