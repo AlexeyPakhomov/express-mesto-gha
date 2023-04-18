@@ -18,13 +18,13 @@ app.use(helmet());
 app.use(limiter); // Ограничение распространяется на все окна
 app.use(bodyParser.json());
 
-//app.use((req, res, next) => {
-//  req.user = {
-//    _id: '643c8207763bd65eb5430fc4',
-//  };
+app.use((req, res, next) => {
+  req.user = {
+    _id: '643f144ee2445908be1e4105',
+  };
 
-//  next();
-//});
+  next();
+});
 
 app.post(
   '/signup',

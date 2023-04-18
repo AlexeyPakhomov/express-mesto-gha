@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const validator = require('validator');
 
 const schema = new Schema(
   {
@@ -12,14 +13,17 @@ const schema = new Schema(
       type: String,
       required: true,
       validate: {
-        validator: (v) =>
-          /https?:\/\/(www\.)?[0-9a-zA-Z-]{1,100}\.[0-9a-zA-Z]{1,6}(\/[0-9a-zA-Z/\S]*)*/.test(v),
+        validator: (v) => {
+          return /https?:\/\/(www\.)?[0-9a-zA-Z-]{1,100}\.[0-9a-zA-Z]{1,6}(\/[0-9a-zA-Z/\S]*)*/.test(
+            v,
+          );
+        },
         message: 'Некорректная ссылка',
       },
+      owner: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+      likes: [{ type: Schema.Types.ObjectId, default: [] }],
+      createdAt: { type: Date, default: Date.now },
     },
-    owner: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    likes: [{ type: Schema.Types.ObjectId, default: [] }],
-    createdAt: { type: Date, default: Date.now },
   },
   {
     versionKey: false,
