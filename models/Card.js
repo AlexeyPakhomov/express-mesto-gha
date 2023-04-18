@@ -20,10 +20,10 @@ const schema = new Schema(
         },
         message: 'Некорректная ссылка',
       },
-      owner: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-      likes: [{ type: Schema.Types.ObjectId, default: [] }],
-      createdAt: { type: Date, default: Date.now },
     },
+    owner: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    likes: [{ type: Schema.Types.ObjectId, default: [] }],
+    createdAt: { type: Date, default: Date.now },
   },
   {
     versionKey: false,
