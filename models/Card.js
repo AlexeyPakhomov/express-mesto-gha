@@ -8,7 +8,15 @@ const schema = new Schema(
       minlength: 2,
       maxlength: 30,
     },
-    link: { type: String, required: true },
+    link: {
+      type: String,
+      required: true,
+      validate: {
+        validator: (v) =>
+          /https?:\/\/(www\.)?[0-9a-zA-Z-]{1,100}\.[0-9a-zA-Z]{1,6}(\/[0-9a-zA-Z/\S]*)*/.test(v),
+        message: 'Некорректная ссылка',
+      },
+    },
     owner: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     likes: [{ type: Schema.Types.ObjectId, default: [] }],
     createdAt: { type: Date, default: Date.now },
