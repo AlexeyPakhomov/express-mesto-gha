@@ -1,6 +1,6 @@
 const Card = require('../models/Card');
-const { BadRequestError } = require('../errors/bad-request-err'); //400
-const { ForbiddenError } = require('../errors/forbidden-err'); //403
+const { BadRequestError } = require('../errors/bad-request-err'); // 400
+const { ForbiddenError } = require('../errors/forbidden-err'); // 403
 const { NotFoundError } = require('../errors/not-found-err'); // 404
 
 const getCards = (req, res, next) => {
@@ -18,6 +18,7 @@ const createCard = (req, res, next) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Переданы некорректные данные при создании карточки.'));
       }
+      return next(err);
     })
     .catch(next);
 };
@@ -28,8 +29,6 @@ const deleteCardById = (req, res, next) => {
       if (!card) {
         return next(new NotFoundError('Карточка с указанным _id не найдена.'));
       }
-      //console.log(`card.owner ${card.owner}`);
-      //console.log(`req.user._id${req.user._id}`);
       if (card.owner.toString() !== req.user._id) {
         return next(new ForbiddenError('Вы не можете удалять карточки других пользователей'));
       }
@@ -39,6 +38,7 @@ const deleteCardById = (req, res, next) => {
       if (err.name === 'CastError') {
         return next(new BadRequestError('Удаление карточки с некорректным id'));
       }
+      return next(err);
     })
     .catch(next);
 };
@@ -59,6 +59,7 @@ const putCardLike = (req, res, next) => {
       if (err.name === 'CastError') {
         return next(new BadRequestError('Переданы некорректные данные для постановки лайка.'));
       }
+      return next(err);
     })
     .catch(next);
 };
@@ -79,6 +80,7 @@ const deleteCardLike = (req, res, next) => {
       if (err.name === 'CastError') {
         return next(new BadRequestError('Переданы некорректные данные для снятия лайка.'));
       }
+      return next(err);
     })
     .catch(next);
 };

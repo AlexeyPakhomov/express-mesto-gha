@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const { regexUrl } = require('../utils/constant');
 
 const schema = new Schema(
   {
@@ -20,8 +21,7 @@ const schema = new Schema(
       type: String,
       default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
       validate: {
-        validator: (v) =>
-          /https?:\/\/(www\.)?[0-9a-zA-Z-]{1,100}\.[0-9a-zA-Z]{1,6}(\/[0-9a-zA-Z/\S]*)*/.test(v),
+        validator: (v) => regexUrl.test(v),
         message: 'Некорректная ссылка',
       },
     },

@@ -8,12 +8,12 @@ const limiter = rateLimit({
   message: 'Превышено допустимое количество запросов. Попробуйте повторить запрос позднее.', // Сообщение при превышении кол-ва запросов
 });
 
-//Генерация секретных ключей
+// Генерация секретных ключей
 
-//const crypto = require('crypto'); // экспортируем crypto
-//const randomString = crypto
+// const crypto = require('crypto'); // экспортируем crypto
+// const randomString = crypto
 //  .randomBytes(32) // сгенерируем случайную последовательность 16 байт (128 бит)
 //  .toString('hex'); // приведём её к строке
-//console.log(randomString);
+// console.log(randomString);
 
 module.exports = { limiter };
