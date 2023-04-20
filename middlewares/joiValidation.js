@@ -49,19 +49,7 @@ const joiCreateCard = celebrate({
   }),
 });
 
-const joiDeleteCard = celebrate({
-  params: Joi.object().keys({
-    cardId: Joi.string().required().length(24),
-  }),
-});
-
-const joiPutCardLike = celebrate({
-  params: Joi.object().keys({
-    cardId: Joi.string().required().length(24),
-  }),
-});
-
-const joiDeleteCardLike = celebrate({
+const joiDeleteCardAndlike = celebrate({
   params: Joi.object().keys({
     cardId: Joi.string().required().length(24),
   }),
@@ -74,7 +62,5 @@ module.exports = {
   joiUpdateProfile,
   joiUpdateAvatar,
   joiCreateCard,
-  joiDeleteCard,
-  joiPutCardLike,
-  joiDeleteCardLike,
+  joiDeleteCardAndlike,
 };

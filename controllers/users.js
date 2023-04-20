@@ -4,7 +4,6 @@ const User = require('../models/User');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 const { BadRequestError } = require('../errors/bad-request-err'); // 400
-const { UnauthorizedError } = require('../errors/unauthorized-err'); // 401
 const { NotFoundError } = require('../errors/not-found-err'); // 404
 const { ConflictingRequestError } = require('../errors/conflicting-request-err'); // 409
 
@@ -44,8 +43,7 @@ const createUser = (req, res, next) => {
         return next(new ConflictingRequestError('Такой пользователь уже существует.'));
       }
       return next(err);
-    })
-    .catch(next);
+    });
 };
 
 const login = (req, res, next) => {
@@ -60,9 +58,7 @@ const login = (req, res, next) => {
       );
       res.send({ token });
     })
-    .catch(() => {
-      next(new UnauthorizedError('Неправильный email или пароль.'));
-    });
+    .catch(next);
 };
 
 const getInfAboutUser = (req, res, next) => {
@@ -89,8 +85,7 @@ const getUserById = (req, res, next) => {
         return next(new BadRequestError('Переданы некорректные данные при поиске пользователя.'));
       }
       return next(err);
-    })
-    .catch(next);
+    });
 };
 
 const updateProfile = (req, res, next) => {
@@ -107,8 +102,7 @@ const updateProfile = (req, res, next) => {
         return next(new BadRequestError('Переданы некорректные данные при обновлении профиля.'));
       }
       return next(err);
-    })
-    .catch(next);
+    });
 };
 
 const updateAvatar = (req, res, next) => {
@@ -129,8 +123,7 @@ const updateAvatar = (req, res, next) => {
         return next(new BadRequestError('Переданы некорректные данные при обновлении аватара.'));
       }
       return next(err);
-    })
-    .catch(next);
+    });
 };
 
 module.exports = {

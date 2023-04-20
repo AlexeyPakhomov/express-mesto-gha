@@ -2,6 +2,7 @@ const { Schema, model } = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const { regexUrl } = require('../utils/constant');
+const { UnauthorizedError } = require('../errors/unauthorized-err'); // 401
 
 const schema = new Schema(
   {
@@ -37,7 +38,6 @@ const schema = new Schema(
     password: {
       type: String,
       required: true,
-      minlength: 8,
       select: false,
     },
   },
@@ -51,12 +51,12 @@ schema.statics.findUserByCredentials = function (email, password) {
     .select('+password')
     .then((user) => {
       if (!user) {
-        return Promise.reject(new Error('Неправильная почта'));
+        return Promise.reject(new UnauthorizedError('Неправильная почта'));
       }
 
       return bcrypt.compare(password, user.password).then((matched) => {
         if (!matched) {
-          return Promise.reject(new Error('Неправильный пароль'));
+          return Promise.reject(new UnauthorizedError('Неправильный пароль'));
         }
         return user;
       });

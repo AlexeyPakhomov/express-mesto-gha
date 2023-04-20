@@ -19,8 +19,7 @@ const createCard = (req, res, next) => {
         return next(new BadRequestError('Переданы некорректные данные при создании карточки.'));
       }
       return next(err);
-    })
-    .catch(next);
+    });
 };
 
 const deleteCardById = (req, res, next) => {
@@ -39,8 +38,7 @@ const deleteCardById = (req, res, next) => {
         return next(new BadRequestError('Удаление карточки с некорректным id'));
       }
       return next(err);
-    })
-    .catch(next);
+    });
 };
 
 const putCardLike = (req, res, next) => {
@@ -60,8 +58,7 @@ const putCardLike = (req, res, next) => {
         return next(new BadRequestError('Переданы некорректные данные для постановки лайка.'));
       }
       return next(err);
-    })
-    .catch(next);
+    });
 };
 
 const deleteCardLike = (req, res, next) => {
@@ -81,8 +78,7 @@ const deleteCardLike = (req, res, next) => {
         return next(new BadRequestError('Переданы некорректные данные для снятия лайка.'));
       }
       return next(err);
-    })
-    .catch(next);
+    });
 };
 
 module.exports = {
